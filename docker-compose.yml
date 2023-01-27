@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    ports:
+      - 4000:4000
+    image: waka-puppeteer-img
+    container_name: waka-puppeteer
+    restart: always
