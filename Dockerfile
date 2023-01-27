@@ -16,4 +16,6 @@ COPY puppeteer.config.cjs .
 RUN yarn install --frozen-lockfile --production
 COPY --from=builder /app/dist/ .
 
+EXPOSE 4000
+
 CMD ["node", "index.js"]
