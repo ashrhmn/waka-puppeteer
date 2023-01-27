@@ -8,3 +8,7 @@ services:
     image: waka-puppeteer-img
     container_name: waka-puppeteer
     restart: always
+networks:
+  default:
+    external: true
+    name: nginx
