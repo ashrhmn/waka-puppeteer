@@ -11,27 +11,28 @@ app.get("/waka/:username", async (req, res) => {
   if (typeof username !== "string")
     return res.status(400).json({ msg: "Invalid Username" });
 
-  const data: IJSONData | null = await readFile(
+  const data: IJSONData = await readFile(
     join(__dirname, "data", `${username}.json`),
     "utf-8"
   )
     .then(JSON.parse)
-    .catch(() => null);
+    .catch(() => ({updated_at: +(Date.now()/1000).toFixed(0)-7200,languages:[]}));
 
-  if (!data) {
-    scrapeData(username);
-    return res.status(404).json({ msg: "Data not found" });
-  }
+  // if (!data) {
+  //   scrapeData(username);
+  //   return res.status(404).json({ msg: "Data not found" });
+  // }
 
   if (data.updated_at < +(Date.now() / 1000).toFixed(0) - 3600)
     scrapeData(username);
   console.log(data.languages.length);
 
   return res.send(
-    `<svg viewBox="0 0 400 ${data.languages.length * 7}">
+    `<svg viewBox="0 0 400 ${data.languages.length * 7}" xmlns="http://www.w3.org/2000/svg" role="img">
       <style>
         .txt{
           font: 4px sans-serif;
+          background-color: black;
         }
       </style>
       ${data.languages.map(
