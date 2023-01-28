@@ -8,7 +8,7 @@ export const scrapeData = async (username: string) => {
 
   await mkdir(join(__dirname, "..", "data")).catch(() => null);
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({args:["--no-sandbox"]});
   try {
     const page = await browser.newPage();
 
